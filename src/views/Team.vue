@@ -34,17 +34,17 @@ export default {
       team: [
         {
           name: "Swan Htet Kyaw",
-          role: "Web developer",
+          role: "Admin",
           avatar: "/avatar-1.png"
         },
-        { name: "Ryu", role: "Graphic designer", avatar: "/avatar-2.png" },
-        { name: "Chun Li", role: "Web developer", avatar: "/avatar-3.png" },
+        { name: "U Kyaw Naing", role: "Father", avatar: "/avatar-2.png" },
+        { name: "Daw Thi Thi Moe", role: "Mother", avatar: "/avatar-3.png" },
         {
-          name: "Gouken",
-          role: "Social media maverick",
+          name: "Htet Nada Aung",
+          role: "Fb User",
           avatar: "/avatar-4.png"
         },
-        { name: "Yoshi", role: "Sales guru", avatar: "/avatar-5.png" }
+        { name: "Putu", role: "King of the house", avatar: "/avatar-5.png" }
       ]
     };
   }

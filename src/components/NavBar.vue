@@ -1,36 +1,53 @@
 <template>
   <nav>
+    <!-- snackbar -->
     <v-snackbar v-model="snackbar" :timeout="4000" top color="success">
-      <span>Awesome You just add a new project</span>
+      <span>Awesome You just add a new Sale</span>
       <v-btn text color="white" @click="snackbar = false">Close</v-btn>
     </v-snackbar>
+    <!-- snackbar -->
+
+    <!-- drawer -->
     <v-app-bar app>
-      <v-app-bar-nav-icon class="grey-text" @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon v-if="islogin" class="grey-text" @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="grey--text">
-        <span class="font-weight-light">TODO</span>
+        <span class="font-weight-light">Fertilizer</span>
         <span>APP</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn v-if="!islogin" class="caption grey--text" small text to="login">Login</v-btn>
+      <v-btn v-if="!islogin" class="caption grey--text" small text to="register">Signup</v-btn>
+      <!-- profile -->
+      <div v-if="islogin" id="profile" class="mr-2" @click="sendDashboard">
+        <div class="px-2 py-1">
+          <v-avatar size="30" class="mr-2">
+            <img src="/avatar-1.png" alt="SwanHtetKyaw" />
+          </v-avatar>
+          <span class="caption grey--text">Swanhtetkyaw</span>
+        </div>
+      </div>
+
+      <!-- profile -->
       <!-- Menu -->
-      <v-menu offset-y>
+      <v-menu offset-y v-if="islogin">
         <template v-slot:activator="{ on }">
-          <v-btn text v-on="on" color="grey">
-            <v-icon left>mdi-chevron-down</v-icon>
-            <!-- or use mdi-chevron-down -->
-            <span>Menu</span>
+          <v-btn color="grey lighten-3" fab x-small depressed v-on="on">
+            <v-icon>mdi-chevron-down</v-icon>
           </v-btn>
+          <!-- or use mdi-chevron-down -->
         </template>
         <v-list>
-          <v-list-item v-for="link in links" :key="link.text" :to="link.route">
-            <v-list-item-title>{{ link.text }}</v-list-item-title>
-          </v-list-item>
+          <v-list-item-group class="primary--text">
+            <v-list-item v-for="link in links" :key="link.text" :to="link.route">
+              <v-list-item-title class="caption">{{ link.text }}</v-list-item-title>
+            </v-list-item>
+            <v-list-item @click="SignOut" id="signout">
+              <v-list-item-title class="caption">LogOut</v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
       </v-menu>
       <!-- Menu end -->
-      <v-btn text small color="grey">
-        <span>Sign-Out</span>
-        <v-icon right>mdi-exit-to-app</v-icon>
-      </v-btn>
     </v-app-bar>
     <!-- Nav drawer -->
     <v-navigation-drawer app v-model="drawer" color="indigo">
@@ -63,24 +80,58 @@
 </template>
 
 <script>
+import { auth } from "@/firebase";
 import Popup from "./Popup";
 export default {
   data() {
     return {
       drawer: false,
+      islogin: false,
+      currentUser: null,
       links: [
         { icon: "mdi-view-dashboard", text: "Dashboard", route: "/" },
-        { icon: "mdi-folder", text: "My Projects", route: "/projects" },
-        { icon: "mdi-account", text: "Team", route: "/team" }
+        { icon: "mdi-store", text: "Buy", route: "/buy" },
+        {
+          icon: "mdi-folder",
+          text: "Inventory",
+          route: "/inventory"
+        },
+        { icon: "mdi-receipt", text: "Graph", route: "/graph" },
+        { icon: "mdi-account", text: "Admin", route: "/team" }
       ],
       snackbar: false
     };
   },
   components: {
     Popup
+  },
+  methods: {
+    SignOut() {
+      auth.signOut().then(() => {
+        this.$router.push("/login");
+        console.log("You are log out");
+      });
+    },
+    sendDashboard() {
+      this.$router.push("/");
+    }
+  },
+  created() {
+    if (auth.currentUser) {
+      this.islogin = true;
+      this.currentUser = auth.currentUser.email;
+    }
   }
 };
 </script>
 
 <style>
+#profile {
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+#profile:hover {
+  background-color: #eeeeee;
+}
 </style>

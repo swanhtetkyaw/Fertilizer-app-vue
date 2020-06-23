@@ -1,19 +1,24 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/functions';
+import 'firebase/auth';
 
-var firebaseConfig = {
-	apiKey: 'AIzaSyC039f2FA8E_0HvUsfJE2PbBa3VoE6e0L4',
-	authDomain: 'todo-vuetify-fb908.firebaseapp.com',
-	databaseURL: 'https://todo-vuetify-fb908.firebaseio.com',
-	projectId: 'todo-vuetify-fb908',
-	storageBucket: 'todo-vuetify-fb908.appspot.com',
-	messagingSenderId: '308685952823',
-	appId: '1:308685952823:web:bd4303d3d7aca736f1ecb2',
-	measurementId: 'G-WXDTHXVYH1'
+const firebaseConfig = {
+	apiKey: 'AIzaSyABJkHp1tqra6z4ASu0P6hihbb0haKmloM',
+	authDomain: 'fertilizerapp-ae380.firebaseapp.com',
+	databaseURL: 'https://fertilizerapp-ae380.firebaseio.com',
+	projectId: 'fertilizerapp-ae380',
+	storageBucket: 'fertilizerapp-ae380.appspot.com',
+	messagingSenderId: '280214718585',
+	appId: '1:280214718585:web:9010b65d2b6f2c9b10eca8',
+	measurementId: 'G-PDN1W2WZEM'
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 //Initialize FireStore
 const db = firebase.firestore();
+const functions = firebase.functions();
+const auth = firebase.auth();
 
+export { functions, auth };
 export default db;
